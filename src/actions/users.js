@@ -8,9 +8,9 @@ export const userConnected = (userData) => async (dispatch) => {
     }
 };
 
-export const userDisconnected = (userData) => async (dispatch) => {
+export const userDisconnected = (id) => async (dispatch) => {
     try {
-        dispatch({type: DISCONNECTED, paload: userData});
+        dispatch({type: DISCONNECTED, payload: id});
     } catch (error) {
         console.log(error);
     }

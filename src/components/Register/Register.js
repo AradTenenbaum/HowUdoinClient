@@ -1,31 +1,35 @@
-import React from 'react';
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Container, Card, Alert } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import { useForm } from "../../hooks/useForm";
-import {register} from '../../actions/user';
-import {ERROR} from '../../constants/actionTypes';
+import { register } from "../../actions/user";
+import { ERROR } from "../../constants/actionTypes";
 
 function Register() {
-    const dispatch = useDispatch();
-    const user = useSelector((state) => state.user);
-  
-    const registerUser = () => {
-        if(values.password === values.passwordAgain){
-            dispatch(register({username: values.username, password: values.password}));
-        } else {
-            dispatch({type: ERROR, payload: "Passwords are not equal"});
-        }
-    };
+  const dispatch = useDispatch();
+  const user = useSelector((state) => state.user);
 
-    const { onChange, onSubmit, Clear, values } = useForm(registerUser, {
-        username: "",
-        password: "",
-        passwordAgain: ""
-      });
+  const registerUser = () => {
+    if (values.password === values.passwordAgain) {
+      dispatch(
+        register({ username: values.username, password: values.password })
+      );
+    } else {
+      dispatch({ type: ERROR, payload: "Passwords are not equal" });
+    }
+  };
 
-    return (
-<Container className="mt-5">
+  const { onChange, onSubmit, Clear, values } = useForm(registerUser, {
+    username: "",
+    password: "",
+    passwordAgain: "",
+  });
+
+  return (
+    <Container className="mt-5 mb-5">
+      {user ? user._id ? <Redirect to="/chat" /> : <div /> : <div />}
       <Card border="primary">
         <Card.Header>Register</Card.Header>
         <Card.Body>
@@ -79,7 +83,7 @@ function Register() {
         </Card.Body>
       </Card>
     </Container>
-    );
+  );
 }
 
 export default Register;

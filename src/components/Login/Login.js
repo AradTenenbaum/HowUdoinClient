@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Form, Button, Container, Card, Alert } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 
 import { useForm } from "../../hooks/useForm";
 import { login } from "../../actions/user";
@@ -19,8 +20,10 @@ function Login() {
     password: "",
   });
 
+
   return (
     <Container className="mt-5">
+        {user ? (user._id ? <Redirect to="/chat" /> : <div/>) : <div/>}
       <Card border="primary">
         <Card.Header>Login</Card.Header>
         <Card.Body>
