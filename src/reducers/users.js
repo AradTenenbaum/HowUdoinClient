@@ -5,7 +5,7 @@ const reducer = (users = [], action) => {
         case CONNECTED:
             return [...users, action.payload];
         case DISCONNECTED: 
-            return users.filter((user) => user._id !== action.payload);
+            return users.filter((user) => user.id !== action.payload);
         default:
             return users;
     }
