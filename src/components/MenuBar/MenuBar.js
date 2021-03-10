@@ -42,7 +42,7 @@ function MenuBar() {
         style={{ outline: "none" }}
         onClick={() => setShowAddFriendModal(true)}
       >
-        Add Friend
+        Requests
       </Nav.Link>
       <Nav.Link
         active
@@ -51,7 +51,7 @@ function MenuBar() {
         style={{ outline: "none" }}
         onClick={() => setShowSendRequestModal(true)}
       >
-        Send request
+        Add Friend
       </Nav.Link>
       <Nav.Link
         active

@@ -1,26 +1,44 @@
 import React from "react";
-import { Modal, Button, Form } from "react-bootstrap";
+import { Modal, Button, Form, Alert } from "react-bootstrap";
 
 import { useForm } from "../../hooks/useForm";
+import { friendRequest } from "../../api/user";
+import { useSelector } from "react-redux";
+import { useState } from "react";
 
 export default function SendRequestModal({
   showSendRequestModal,
   setShowSendRequestModal,
 }) {
+  const user = useSelector((state) => state.user);
+  const [serverMessage, setServerMessage] = useState(null);
 
-    const sendRequest = () => {
-        
-    };
-
-    const { onChange, onSubmit, Clear, values } = useForm(sendRequest, {
-        userID: ""
-      });
-      console.log(values)
-
-      const endModal = () => {
+  const sendRequest = async () => {
+    if (values.userID !== "") {
+      try {
+        const { data } = await friendRequest({
+          username: user.username,
+          requestedUserID: values.userID,
+        });
         Clear();
-        setShowSendRequestModal(false)
-      };
+        setServerMessage({ isError: false, message: data });
+      } catch (error) {
+        setServerMessage({ isError: true, message: error.response.data });
+      }
+    } else {
+      setServerMessage({ isError: true, message: "User ID can't be empty" });
+    }
+  };
+
+  const { onChange, onSubmit, Clear, values } = useForm(sendRequest, {
+    userID: "",
+  });
+
+  const endModal = () => {
+    Clear();
+    setServerMessage(null);
+    setShowSendRequestModal(false);
+  };
 
   return (
     <div>
@@ -32,18 +50,30 @@ export default function SendRequestModal({
       >
         <Modal.Header closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add a friend by ID
+            Send a friend request by the user's ID
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <Form onSubmit={onSubmit}>
             <Form.Group controlId="formBasicEmail">
-              <Form.Control type="text" placeholder="Enter a user ID" name="userID" value={values.userID} onChange={onChange} />
+              <Form.Control
+                type="text"
+                placeholder="Enter a user ID"
+                name="userID"
+                value={values.userID}
+                onChange={onChange}
+              />
             </Form.Group>
-            <Button size="md" block type="submit" onClick={(e) => {
-                e.preventDefault();
-                endModal()
-            }}>Send</Button>
+            {serverMessage ? (
+              <Alert className="mt-3" variant={serverMessage.isError ? "danger" : "success"}>
+                <h6>{serverMessage.message}</h6>
+              </Alert>
+            ) : (
+              <div />
+            )}
+            <Button size="md" block type="submit">
+              Send
+            </Button>
           </Form>
         </Modal.Body>
       </Modal>

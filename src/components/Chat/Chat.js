@@ -42,7 +42,6 @@ function Chat() {
         }, [users]);
     });
 
-    console.log(users);
 
     return (
         <div>
