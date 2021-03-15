@@ -24,7 +24,7 @@ function Login() {
   return (
     <Container className="mt-5">
         {user ? (user._id ? <Redirect to="/chat" /> : <div/>) : <div/>}
-      <Card border="primary">
+      <Card bg="dark" text="white">
         <Card.Header>Login</Card.Header>
         <Card.Body>
           <Card.Title>Enter your details and start to chat</Card.Title>

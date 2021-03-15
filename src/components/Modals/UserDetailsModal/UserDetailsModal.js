@@ -9,8 +9,9 @@ function UserDetailsModal({showUserDetails, setShowUserDetails, user}) {
         onHide={() => setShowUserDetails(false)}
         dialogClassName="modal-90w"
         centered
+        // style={{backgroundColor: "#343a40"}}
       >
-        <Modal.Header closeButton>
+        <Modal.Header style={{backgroundColor: "#343a40", color: "white"}} closeButton>
           <Modal.Title id="example-custom-modal-styling-title">
             {user.username}
           </Modal.Title>

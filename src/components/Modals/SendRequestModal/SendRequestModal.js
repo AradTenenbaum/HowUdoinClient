@@ -1,8 +1,8 @@
 import React from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
 
-import { useForm } from "../../hooks/useForm";
-import { friendRequest } from "../../api/user";
+import { useForm } from "../../../hooks/useForm";
+import { friendRequest } from "../../../api/user";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 
@@ -48,7 +48,7 @@ export default function SendRequestModal({
         onHide={() => endModal()}
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header style={{backgroundColor: "#343a40", color: "white"}} closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             Send a friend request by the user's ID
           </Modal.Title>

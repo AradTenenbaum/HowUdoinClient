@@ -30,7 +30,7 @@ function Register() {
   return (
     <Container className="mt-5 mb-5">
       {user ? user._id ? <Redirect to="/chat" /> : <div /> : <div />}
-      <Card border="primary">
+      <Card bg="dark" text="white">
         <Card.Header>Register</Card.Header>
         <Card.Body>
           <Card.Title>Create a user to start</Card.Title>

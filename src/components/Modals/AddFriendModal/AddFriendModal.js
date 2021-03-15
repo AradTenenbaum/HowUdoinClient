@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { Modal, Button, ListGroup } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 
-import { addFriend } from "../../actions/user";
+import { addFriend } from "../../../actions/user";
 
 export default function AddFriendModal({
   showAddFriendModal,
@@ -24,14 +24,14 @@ export default function AddFriendModal({
         onHide={() => setShowAddFriendModal(false)}
         centered
       >
-        <Modal.Header closeButton>
+        <Modal.Header style={{backgroundColor: "#343a40", color: "white"}} closeButton>
           <Modal.Title id="contained-modal-title-vcenter">
             My requests
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body style={{maxHeight: 'calc(100vh - 250px)', overflowY: 'auto'}}>
           <ListGroup>
-            {user ? (
+            {user ? (user.requests ? (
               user.requests.length > 0 ? (
                 user.requests.map((request, index) => (
                   <ListGroup.Item
@@ -47,7 +47,7 @@ export default function AddFriendModal({
               ) : (
                 <h5>No requests...</h5>
               )
-            ) : (
+            ) : <div/>) : (
               <div />
             )}
           </ListGroup>
