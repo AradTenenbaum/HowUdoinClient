@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faCircle } from "@fortawesome/free-solid-svg-icons";
 
 import { LOGOUT } from "../../constants/actionTypes";
+import {changeUser, noUser} from '../../actions/currentUser';
 import UserDetailsModal from "../Modals/UserDetailsModal/UserDetailsModal";
 import AddFriendModal from "../Modals/AddFriendModal/AddFriendModal";
 import SendRequestModal from "../Modals/SendRequestModal/SendRequestModal";
@@ -16,6 +17,7 @@ function MenuBar() {
   const location = useLocation();
   const user = useSelector((state) => state.user);
   const users = useSelector((state) => state.users);
+  const currentUser = useSelector((state) => state.currentUser);
   const [showUserDetails, setShowUserDetails] = useState(false);
   const [showAddFriendModal, setShowAddFriendModal] = useState(false);
   const [showSendRequestModal, setShowSendRequestModal] = useState(false);
@@ -75,7 +77,10 @@ function MenuBar() {
       <div className="closebtn" onClick={() => setShowSideBar(false)}>&times;</div>
       <h1>Users</h1>
       {users.length > 0 ? users.map((user, index) => (
-        <div className="d-flex justify-content-between hoveranim">
+        <div onClick={() => {
+          if((currentUser && currentUser.username !== user.username) || !currentUser) dispatch(changeUser(user));
+          else dispatch(noUser());
+        }} className="d-flex justify-content-between hoveranim" style={{background: currentUser && user.username === currentUser.username ? "cornflowerblue" : ""}}>
           <span key={index}>{user.username}</span>
           <FontAwesomeIcon
           color="green"
@@ -91,6 +96,7 @@ function MenuBar() {
       }) : <div/>) : <div/>}
     </div>
   );
+
 
   return (
     <div id="main" >
@@ -121,7 +127,7 @@ function MenuBar() {
           onClick={() => setShowSideBar(true)}
         />
         <Navbar.Brand as={Link} to="/">
-          HowUdoin
+          {currentUser ? currentUser.username : "HowUdoin"}
         </Navbar.Brand>
         <Nav className="mr-auto"></Nav>
         {LeftNav}
